@@ -1,12 +1,20 @@
 {
   "sources": [
     {
-      "title": "Source 1",
-      "url": "SourcePagesNikola/source1.html"
+      "title": "What is requirements enginnering - Technikum Wien Academy",
+      "url": "https://academy.technikum-wien.at/ratgeber/was-ist-requirements-engineering/"
     },
     {
-      "title": "Source 2",
-      "url": "SourcePagesNikola/source2.html"
+      "title": "What is requirements enginnering - t2informatik",
+      "url": "https://t2informatik.de/wissen-kompakt/requirements-engineering/"
+    },
+    {
+      "title": "",
+      "url": ""
+    },
+    {
+      "title": "",
+      "url": ""
     }
   ]
 }
