@@ -1,0 +1,25 @@
+* {
+    font-family: Calibri;
+}
+
+.aiQuery {
+    font-family: Calibri;
+    font-size: larger;
+}
+
+.aiResponse {
+    font-family: Calibri;
+    font-size: medium;
+}
+
+.link {
+    font-size: large;
+}
+
+#mainHead {
+    text-align: center;
+}
+
+textarea {
+    white-space: nowrap;
+}
