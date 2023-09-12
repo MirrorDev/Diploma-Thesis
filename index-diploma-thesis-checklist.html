@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thesis Checklist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.5);
+    }
+
+    button {
+      margin-top: 20px;
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<h1>Thesis Checklist</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Gargari</th>
+    <th>Stanic</th>
+    <th>Jozwiak</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>2 - 3 Grafiken</td>
+    <td><input type="checkbox" id="gargari-graphs"></td>
+    <td><input type="checkbox" id="stanic-graphs"></td>
+    <td><input type="checkbox" id="jozwiak-graphs"></td>
+  </tr>
+  <tr>
+    <td>Code Listings</td>
+    <td><input type="checkbox" id="gargari-codelisting"></td>
+    <td></td>
+    <td><input type="checkbox" id="jozwiak-codelisting"></td>
+  </tr>
+  <tr>
+    <td>50-60 Seiten</td>
+    <td><input type="checkbox" id="gargari-pages"></td>
+    <td><input type="checkbox" id="stanic-pages"></td>
+    <td><input type="checkbox" id="jozwiak-pages"></td>
+  </tr>
+  <!-- Add more rows for different checklist items -->
+  </tbody>
+</table>
+
+<button onclick="saveChecklist()">Save Checklist</button>
+<button onclick="loadChecklist()">Load Checklist</button>
+
+<script>
+  // Function to save the checklist state to localStorage
+  function saveChecklist() {
+    const checklistData = {
+      Gargari: {
+        graphs: document.getElementById("gargari-graphs").checked,
+        codelisting: document.getElementById("gargari-codelisting").checked,
+        pages: document.getElementById("gargari-pages").checked,
+      },
+      Stanic: {
+        graphs: document.getElementById("stanic-graphs").checked,
+        pages: document.getElementById("stanic-pages").checked,
+      },
+      Jozwiak: {
+        graphs: document.getElementById("jozwiak-graphs").checked,
+        codelisting: document.getElementById("jozwiak-codelisting").checked,
+        pages: document.getElementById("jozwiak-pages").checked,
+      }
+    };
+
+    // Save the checklist data to localStorage
+    localStorage.setItem("thesisChecklist", JSON.stringify(checklistData));
+  }
+
+  // Function to load the checklist state from localStorage
+  function loadChecklist() {
+    const savedData = localStorage.getItem("thesisChecklist");
+
+    if (savedData) {
+      const checklistData = JSON.parse(savedData);
+
+      // Update the checkboxes based on the loaded data
+      for (const name in checklistData) {
+        for (const item in checklistData[name]) {
+          const checkboxId = `${name.toLowerCase()}-${item.toLowerCase()}`;
+          document.getElementById(checkboxId).checked = checklistData[name][item];
+        }
+      }
+    } else {
+      alert("No saved checklist data found.");
+    }
+  }
+
+  // Load the checklist data when the page loads
+  window.addEventListener("load", loadChecklist);
+</script>
+</body>
+</html>
