@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Tracker</title>
+    <link rel="stylesheet" href="styles-activitytracker.css">
+</head>
+<body>
+<h1>Activity Tracker</h1>
+<div id="activity-form">
+    <label for="date">Date:</label>
+    <input type="date" id="date">
+    <label for="hours">Hours:</label>
+    <input type="number" id="hours">
+    <label for="activity">Activity:</label>
+    <input type="text" id="activity">
+    <label for="name">Name:</label>
+    <input type="text" id="name">
+    <button id="add-activity">Add Activity</button>
+</div>
+<div id="activity-list">
+    <h2>Activity List</h2>
+    <label for="filter-name">Filter by Name:</label>
+    <input type="text" id="filter-name">
+    <ul id="activities"></ul>
+</div>
+<div id="totals">
+    <h2>Hours Per Name</h2>
+    <ul id="hours-per-name"></ul>
+</div>
+<script src="script-acitvitytracker.js"></script>
+</body>
+</html>
