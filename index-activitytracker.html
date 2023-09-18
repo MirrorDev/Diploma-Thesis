@@ -17,7 +17,7 @@
     <input type="text" id="activity">
     <label for="name">Name:</label>
     <input type="text" id="name">
-    <button id="add-activity">Add Activity</button>
+    <button id="add-activity" onclick="addActivity()">Add Activity</button>
 </div>
 <div id="activity-list">
     <h2>Activity List</h2>
@@ -30,5 +30,8 @@
     <ul id="hours-per-name"></ul>
 </div>
 <script src="script-acitvitytracker.js"></script>
+<script>
+    document.getElementById("filter-name").addEventListener("input", updateActivityList);
+</script>
 </body>
 </html>

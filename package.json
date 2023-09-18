@@ -1,0 +1,7 @@
+{
+  "name": "Diploma-Thesis",
+  "version": "1.0.0",
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}

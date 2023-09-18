@@ -1,7 +1,9 @@
-// Initialize an empty array to store activities
-let activities = [];
+import * as fs from "fs";
 
-// Function to add a new activity
+let activities = [];
+let newList = [];
+
+// Funktion, um eine neue Aktivität hinzuzufügen
 function addActivity() {
     const date = document.getElementById("date").value;
     const hours = parseFloat(document.getElementById("hours").value);
@@ -10,20 +12,21 @@ function addActivity() {
 
     if (date && hours && activity && name) {
         activities.push({ date, hours, activity, name });
+        newList.push({ date, hours, activity, name });
         updateActivityList();
         calculateHoursPerName();
-        saveActivitiesToCSV();
-        // Clear input fields
+        saveActivitiesToTXT();
+        // Eingabefelder leeren
         document.getElementById("date").value = "";
         document.getElementById("hours").value = "";
         document.getElementById("activity").value = "";
         document.getElementById("name").value = "";
     } else {
-        alert("Please fill in all fields.");
+        alert("Bitte füllen Sie alle Felder aus.");
     }
 }
 
-// Function to update the activity list
+// Funktion zum Aktualisieren der Aktivitätenliste
 function updateActivityList() {
     const activitiesList = document.getElementById("activities");
     activitiesList.innerHTML = "";
@@ -32,13 +35,13 @@ function updateActivityList() {
     activities.forEach((activity, index) => {
         if (!filterName || activity.name.toLowerCase().includes(filterName)) {
             const li = document.createElement("li");
-            li.textContent = `${activity.date} - ${activity.hours} hours - ${activity.activity} - ${activity.name}`;
+            li.textContent = `${activity.date} - ${activity.hours} Stunden - ${activity.activity} - ${activity.name}`;
             activitiesList.appendChild(li);
         }
     });
 }
 
-// Function to calculate hours per name
+// Funktion zum Berechnen der Stunden pro Name
 function calculateHoursPerName() {
     const hoursPerName = {};
 
@@ -55,31 +58,39 @@ function calculateHoursPerName() {
 
     for (const name in hoursPerName) {
         const li = document.createElement("li");
-        li.textContent = `${name}: ${hoursPerName[name]} hours`;
+        li.textContent = `${name}: ${hoursPerName[name]} Stunden`;
         hoursPerNameList.appendChild(li);
     }
 }
 
-// Function to save activities to CSV
-function saveActivitiesToCSV() {
-    const csvContent = "Date,Hours,Activity,Name\n" + activities.map(activity => `${activity.date},${activity.hours},${activity.activity},${activity.name}`).join("\n");
+// Funktion zum Speichern von Aktivitäten in eine TXT-Datei
+function saveActivitiesToTXT() {
+    let data = "";
 
-    // Create a Blob with the CSV content
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    newList.forEach((activity) => {
+        data += `${activity.date}, ${activity.hours}, ${activity.activity}, ${activity.name}\n`;
+    });
 
-    // Use the FileSaver.js library to save the Blob as a file
-    saveAs(blob, 'activities.csv');
+    fs.writeFile('activities.txt', data, (err) => {
+        if (err) throw err;
+        console.log('Aktivitäten in TXT-Datei gespeichert.');
+    });
 }
-// Function to load activities from a local CSV file
-function loadActivitiesFromCSV() {
-    fetch('activities.csv')
-        .then(response => response.text())
-        .then(csvText => {
-            const rows = csvText.split('\n');
-            activities = [];
 
-            for (let i = 1; i < rows.length; i++) {
-                const columns = rows[i].split(',');
+// Funktion zum Laden von Aktivitäten aus einer lokalen TXT-Datei
+function loadActivitiesFromTXT() {
+    fs.readFile('activities.txt', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Fehler beim Laden der Aktivitäten:', err);
+            return;
+        }
+
+        const lines = data.split('\n');
+        activities = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            const columns = lines[i].split(', ');
+            if (columns.length === 4) {
                 activities.push({
                     date: columns[0],
                     hours: parseFloat(columns[1]),
@@ -87,22 +98,20 @@ function loadActivitiesFromCSV() {
                     name: columns[3]
                 });
             }
+        }
 
-            updateActivityList();
-            calculateHoursPerName();
-        })
-        .catch(error => {
-            console.error('Error loading activities:', error);
-        });
+        updateActivityList();
+        calculateHoursPerName();
+    });
 }
 
-// Add event listener to load data when the application starts
-window.addEventListener('load', loadActivitiesFromCSV);
+// Eventlistener zum Laden von Daten, wenn die Anwendung gestartet wird
+window.addEventListener('load', loadActivitiesFromTXT);
 
-// Add event listeners
+// Eventlistener hinzufügen
 document.getElementById("add-activity").addEventListener("click", addActivity);
 document.getElementById("filter-name").addEventListener("input", updateActivityList);
 
-// Initial load
+// Initial laden
 updateActivityList();
 calculateHoursPerName();
