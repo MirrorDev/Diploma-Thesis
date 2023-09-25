@@ -25,6 +25,10 @@ body {
     padding: 20px;
 }
 
+.chapterH1 {
+    text-align: center;
+}
+
 h2 {
     text-align: center;
     margin-top: 20px;
